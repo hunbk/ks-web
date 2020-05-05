@@ -1,13 +1,7 @@
 package com.byeonghun.app.controller;
 
-import com.byeonghun.app.entity.Interests;
-import com.byeonghun.app.entity.Person;
-import com.byeonghun.app.entity.Skill;
-import com.byeonghun.app.entity.SocialMedia;
-import com.byeonghun.app.repository.InterestsRepository;
-import com.byeonghun.app.repository.PersonRepository;
-import com.byeonghun.app.repository.SkillRepository;
-import com.byeonghun.app.repository.SocialMediaRepository;
+import com.byeonghun.app.entity.*;
+import com.byeonghun.app.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +15,14 @@ public class IndexController {
     private final SocialMediaRepository socialMediaRepository;
     private final InterestsRepository interestsRepository;
     private final SkillRepository skillRepository;
+    private final WorkRepository workRepository;
 
-    public IndexController(PersonRepository personRepository, SocialMediaRepository socialMediaRepository, InterestsRepository interestsRepository, SkillRepository skillRepository) {
+    public IndexController(PersonRepository personRepository, SocialMediaRepository socialMediaRepository, InterestsRepository interestsRepository, SkillRepository skillRepository, WorkRepository workRepository) {
         this.personRepository = personRepository;
         this.socialMediaRepository = socialMediaRepository;
         this.interestsRepository = interestsRepository;
         this.skillRepository = skillRepository;
+        this.workRepository = workRepository;
     }
 
     @GetMapping("/")
@@ -35,6 +31,7 @@ public class IndexController {
         SocialMedia socialMedia = socialMediaRepository.findAll().stream().findFirst().orElse(null); model.addAttribute("socialMedia",socialMedia);
         List<Interests> interests = interestsRepository.findAll(); model.addAttribute("interests", interests);
         List<Skill> skills = skillRepository.findAll(); model.addAttribute("skills", skills);
+        List<Work> works = workRepository.findAll(); model.addAttribute("works", works);
         return "resume";
     }
 }
